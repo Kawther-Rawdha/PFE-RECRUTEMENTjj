@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOLTRA — Creative Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #141414;
+      --fg: #f0ece4;
+      --fg-muted: #8a8578;
+      --accent: #e8a849;
+      --accent-hot: #f05e23;
+      --card: #1a1a18;
+      --border: #2a2a26;
+      --glass: rgba(20, 20, 18, 0.7);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) var(--bg);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* --- Navigation --- */
+    .nav-glass {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.4s ease;
+    }
+
+    .nav-glass.scrolled {
+      background: rgba(10, 10, 10, 0.92);
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--fg-muted);
+      transition: color 0.3s;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover { color: var(--fg); }
+    .nav-link:hover::after { width: 100%; }
+
+    /* --- Hero --- */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-gradient-orb {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      pointer-events: none;
+      transition: transform 0.1s ease-out;
+    }
+
+    .hero-gradient-orb.orb-1 {
+      background: radial-gradient(circle, var(--accent), transparent 70%);
+      top: -10%;
+      right: -5%;
+    }
+
+    .hero-gradient-orb.orb-2 {
+      background: radial-gradient(circle, var(--accent-hot), transparent 70%);
+      bottom: -15%;
+      left: -10%;
+      opacity: 0.2;
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-title .line span {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-title .line:nth-child(2) span { animation-delay: 0.12s; }
+    .hero-title .line:nth-child(3) span { animation-delay: 0.24s; }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
+
+    .hero-subtitle {
+      opacity: 0;
+      animation: fadeIn 1s 0.5s ease forwards;
+    }
+
+    .hero-cta {
+      opacity: 0;
+      animation: fadeIn 1s 0.7s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .accent-text { color: var(--accent); }
+    .accent-hot-text { color: var(--accent-hot); }
+
+    /* --- Buttons --- */
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      padding: 14px 36px;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(232, 168, 73, 0.35);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before { left: 100%; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--fg);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      padding: 14px 36px;
+      border: 1.5px solid var(--border);
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* --- Floating shapes --- */
+    .floating-shape {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.08;
+      animation: floatShape 20s ease-in-out infinite;
+    }
+
+    @keyframes floatShape {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-30px) rotate(120deg); }
+      66% { transform: translateY(20px) rotate(240deg); }
+    }
+
+    /* --- Grid lines background --- */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232, 168, 73, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 168, 73, 0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 100%);
+    }
+
+    /* --- Section reveal --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* --- Service Cards --- */
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hot));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(232, 168, 73, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 24px;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover .service-icon { transform: scale(1.1) rotate(-5deg); }
+
+    /* --- Portfolio --- */
+    .portfolio-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/3;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.3) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .portfolio-item:hover img { transform: scale(1.08); }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+    /* --- Stats --- */
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hot));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+    }
+
+    /* --- Marquee --- */
+    .marquee-track {
+      display: flex;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      white-space: nowrap;
+      padding: 0 40px;
+      color: var(--fg);
+      opacity: 0.15;
+      transition: opacity 0.3s;
+    }
+
+    .marquee-item:hover { opacity: 0.5; }
+
+    .marquee-dot {
+      color: var(--accent);
+      opacity: 0.3;
+      padding: 0 20px;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    /* --- Testimonial --- */
+    .testimonial-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '\201C';
+      font-family: 'Syne', serif;
+      font-size: 100px;
+      color: var(--accent);
+      opacity: 0.15;
+      position: absolute;
+      top: 10px;
+      left: 28px;
+      line-height: 1;
+    }
+
+    /* --- CTA Section --- */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 168, 73, 0.15), transparent 70%);
+      filter: blur(60px);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* --- Toast --- */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--card);
+      border: 1px solid var(--accent);
+      color: var(--fg);
+      padding: 16px 28px;
+      border-radius: 14px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      z-index: 9999;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* --- Canvas Particles --- */
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* --- Mobile nav --- */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(20px);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu.open { transform: translateX(0); }
+
+    .mobile-menu a {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--fg);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* --- Misc --- */
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px;
+    }
+
+    /* --- Cursor follower --- */
+    .cursor-follower {
+      position: fixed;
+      width: 24px;
+      height: 24px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transition: width 0.3s, height 0.3s, border-color 0.3s, opacity 0.3s;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+
+    .cursor-follower.active { opacity: 1; }
+    .cursor-follower.hovering {
+      width: 50px;
+      height: 50px;
+      border-color: var(--accent-hot);
+    }
+
+    @media (max-width: 768px) {
+      .cursor-follower { display: none; }
+      .stat-divider { width: 60px; height: 1px; }
+    }
+
+    /* --- Focus visible --- */
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .marquee-track { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Noise overlay -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Cursor follower -->
+  <div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
+
+  <!-- Particle canvas -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <nav class="nav-glass fixed top-0 left-0 w-full z-50" role="navigation" aria-label="Main navigation">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#hero" class="font-display font-800 text-xl tracking-tight" style="color: var(--fg);">
+        VOLTRA<span class="accent-text">.</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#services" class="nav-link text-sm">Services</a>
+        <a href="#work" class="nav-link text-sm">Work</a>
+        <a href="#about" class="nav-link text-sm">About</a>
+        <a href="#testimonials" class="nav-link text-sm">Clients</a>
+        <a href="#contact" class="btn-primary text-sm" style="padding: 10px 24px;">Start a Project</a>
+      </div>
+      <button class="md:hidden text-2xl" id="menuToggle" aria-label="Toggle menu" style="color: var(--fg); background:none; border:none; cursor:pointer;">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+    <button id="menuClose" aria-label="Close menu" style="position:absolute; top:24px; right:24px; background:none; border:none; color:var(--fg); font-size:28px; cursor:pointer;">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <a href="#services" class="mobile-nav-link">Services</a>
+    <a href="#work" class="mobile-nav-link">Work</a>
+    <a href="#about" class="mobile-nav-link">About</a>
+    <a href="#testimonials" class="mobile-nav-link">Clients</a>
+    <a href="#contact" class="mobile-nav-link">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero-section" id="hero">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="hero-gradient-orb orb-1" id="orb1" aria-hidden="true"></div>
+    <div class="hero-gradient-orb orb-2" aria-hidden="true"></div>
+
+    <!-- Floating shapes -->
+    <svg class="floating-shape" style="top:15%; left:8%; width:60px;" viewBox="0 0 60 60" aria-hidden="true">
+      <rect x="10" y="10" width="40" height="40" rx="8" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--accent);"/>
+    </svg>
+    <svg class="floating-shape" style="top:60%; right:12%; width:50px; animation-delay:-7s;" viewBox="0 0 50 50" aria-hidden="true">
+      <circle cx="25" cy="25" r="20" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--accent-hot);"/>
+    </svg>
+    <svg class="floating-shape" style="bottom:20%; left:15%; width:40px; animation-delay:-14s;" viewBox="0 0 40 40" aria-hidden="true">
+      <polygon points="20,4 36,34 4,34" stroke="currentColor" stroke-width="1.5" fill="none" style="color: var(--fg);"/>
+    </svg>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10 w-full pt-32 pb-20">
+      <div class="max-w-4xl">
+        <p class="section-label mb-6 hero-subtitle">Creative Studio &mdash; Est. 2019</p>
+        <h1 class="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+          <span class="line"><span>We craft</span></span>
+          <span class="line"><span><span class="accent-text">digital</span> experiences</span></span>
+          <span class="line"><span>that <span class="accent-hot-text">ignite</span>.</span></span>
+        </h1>
+        <p class="hero-subtitle mt-8 text-lg md:text-xl max-w-xl leading-relaxed" style="color: var(--fg-muted);">
+          Strategy, design, and engineering converge to build brands and products that leave a lasting mark.
+        </p>
+        <div class="hero-cta flex flex-wrap gap-4 mt-10">
+          <button class="btn-primary" onclick="scrollToSection('#contact')">Let's Talk</button>
+          <button class="btn-outline" onclick="scrollToSection('#work')">View Our Work</button>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 hero-subtitle" style="animation-delay: 1.2s;">
+        <span class="text-xs tracking-widest uppercase" style="color: var(--fg-muted);">Scroll</span>
+        <div style="width:1px; height:40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: pulse 2s ease-in-out infinite;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="overflow-hidden py-10 border-t border-b" style="border-color: var(--border);" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Brand Strategy</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Web Design</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Development</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Motion Graphics</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">3D Experiences</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Product Design</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Brand Strategy</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Web Design</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Development</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Motion Graphics</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">3D Experiences</span>
+      <span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Product Design</span>
+      <span class="marquee-dot">&bull;</span>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="py-28 md:py-36 relative" id="services">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal mb-16 md:mb-20">
+        <p class="section-label mb-4">What We Do</p>
+        <h2 class="section-heading text-3xl md:text-5xl max-w-2xl">
+          End-to-end craft for the <span class="accent-text">modern web</span>.
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="service-card reveal reveal-delay-1" data-hoverable>
+          <div class="service-icon" style="background: rgba(232,168,73,0.1); color: var(--accent);">
+            <i class="fa-solid fa-compass-drafting"></i>
+          </div>
+          <h3 class="font-display font-700 text-lg mb-3">Brand Identity</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--fg-muted);">Strategic positioning, visual systems, and naming that carve out distinct territory in crowded markets.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2" data-hoverable>
+          <div class="service-icon" style="background: rgba(240,94,35,0.1); color: var(--accent-hot);">
+            <i class="fa-solid fa-pen-ruler"></i>
+          </div>
+          <h3 class="font-display font-700 text-lg mb-3">UI/UX Design</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--fg-muted);">User-centered interfaces that balance aesthetics with usability, validated through rapid prototyping and testing.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3" data-hoverable>
+          <div class="service-icon" style="background: rgba(232,168,73,0.1); color: var(--accent);">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h3 class="font-display font-700 text-lg mb-3">Development</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--fg-muted);">Performant, accessible front-ends and robust back-ends. React, Next.js, headless CMS — whatever the project demands.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-4" data-hoverable>
+          <div class="service-icon" style="background: rgba(240,94,35,0.1); color: var(--accent-hot);">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <h3 class="font-display font-700 text-lg mb-3">Motion & 3D</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--fg-muted);">Cinematic animations, WebGL experiences, and interactive storytelling that make visitors stop and pay attention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work / Portfolio -->
+  <section class="py-28 md:py-36 relative" id="work" style="background: var(--bg-elevated);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between mb-16 md:mb-20 gap-6">
+        <div>
+          <p class="section-label mb-4">Selected Work</p>
+          <h2 class="section-heading text-3xl md:text-5xl max-w-xl">
+            Results that <span class="accent-hot-text">speak</span> for themselves.
+          </h2>
+        </div>
+        <button class="btn-outline text-sm self-start" style="padding: 10px 24px;">View All Projects</button>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="portfolio-item reveal reveal-delay-1" data-hoverable>
+          <img src="https://picsum.photos/seed/voltra1/800/600.jpg" alt="Solaris Energy Platform" loading="lazy">
+          <div class="portfolio-overlay">
+            <span class="text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--accent);">Web Platform</span>
+            <h3 class="font-display font-700 text-xl">Solaris Energy</h3>
+            <p class="text-sm mt-1" style="color: var(--fg-muted);">Full-stack SaaS dashboard for renewable energy analytics</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item reveal reveal-delay-2" data-hoverable>
+          <img src="https://picsum.photos/seed/voltra2/800/600.jpg" alt="Noire Fashion Brand" loading="lazy">
+          <div class="portfolio-overlay">
+            <span class="text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--accent);">Brand & E-Commerce</span>
+            <h3 class="font-display font-700 text-xl">Noire Collective</h3>
+            <p class="text-sm mt-1" style="color: var(--fg-muted);">Luxury fashion brand identity with immersive shopping experience</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item reveal reveal-delay-3" data-hoverable>
+          <img src="https://picsum.photos/seed/voltra3/800/600.jpg" alt="Pulse Health App" loading="lazy">
+          <div class="portfolio-overlay">
+            <span class="text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--accent);">Product Design</span>
+            <h3 class="font-display font-700 text-xl">Pulse Health</h3>
+            <p class="text-sm mt-1" style="color: var(--fg-muted);">AI-powered wellness app with real-time biometric tracking</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item reveal reveal-delay-4" data-hoverable>
+          <img src="https://picsum.photos/seed/voltra4/800/600.jpg" alt="Vertex Architecture Studio" loading="lazy">
+          <div class="portfolio-overlay">
+            <span class="text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--accent);">3D & WebGL</span>
+            <h3 class="font-display font-700 text-xl">Vertex Architects</h3>
+            <p class="text-sm mt-1" style="color: var(--fg-muted);">Interactive 3D portfolio showcasing architectural visions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Stats -->
+  <section class="py-28 md:py-36 relative" id="about">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div>
+          <div class="reveal">
+            <p class="section-label mb-4">About Voltra</p>
+            <h2 class="section-heading text-3xl md:text-5xl mb-8">
+              A small team with <span class="accent-text">outsized ambition</span>.
+            </h2>
+          </div>
+          <div class="reveal reveal-delay-1">
+            <p class="text-base leading-relaxed mb-6" style="color: var(--fg-muted);">
+              Founded in 2019, Voltra is a multidisciplinary studio of designers, developers, and strategists who believe the best digital work comes from deep collaboration, not siloed processes.
+            </p>
+            <p class="text-base leading-relaxed mb-8" style="color: var(--fg-muted);">
+              We partner with forward-thinking companies — from Series A startups to established enterprises — to create digital products and brands that people genuinely enjoy using. Every pixel, every line of code, every strategic decision is in service of that goal.
+            </p>
+            <button class="btn-primary text-sm" style="padding: 12px 28px;" onclick="scrollToSection('#contact')">Work With Us</button>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2">
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-0">
+            <div class="text-center px-8">
+              <div class="stat-number" data-count="127">0</div>
+              <p class="text-sm mt-3 font-medium" style="color: var(--fg-muted);">Projects Delivered</p>
+            </div>
+            <div class="stat-divider hidden sm:block"></div>
+            <div class="text-center px-8">
+              <div class="stat-number" data-count="43">0</div>
+              <p class="text-sm mt-3 font-medium" style="color: var(--fg-muted);">Global Clients</p>
+            </div>
+            <div class="stat-divider hidden sm:block"></div>
+            <div class="text-center px-8">
+              <div class="stat-number" data-count="15">0</div>
+              <p class="text-sm mt-3 font-medium" style="color: var(--fg-muted);">Awards Won</p>
+            </div>
+          </div>
+
+          <!-- Team photos -->
+          <div class="flex justify-center mt-12 gap-4">
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2" style="border-color: var(--border);">
+              <img src="https://picsum.photos/seed/team1/100/100.jpg" alt="Team member" class="w-full h-full object-cover">
+            </div>
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2" style="border-color: var(--border);">
+              <img src="https://picsum.photos/seed/team2/100/100.jpg" alt="Team member" class="w-full h-full object-cover">
+            </div>
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2" style="border-color: var(--border);">
+              <img src="https://picsum.photos/seed/team3/100/100.jpg" alt="Team member" class="w-full h-full object-cover">
+            </div>
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2" style="border-color: var(--border);">
+              <img src="https://picsum.photos/seed/team4/100/100.jpg" alt="Team member" class="w-full h-full object-cover">
+            </div>
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2 flex items-center justify-center" style="border-color: var(--accent); background: rgba(232,168,73,0.1);">
+              <span class="text-xs font-bold" style="color: var(--accent);">+8</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-28 md:py-36 relative" id="testimonials" style="background: var(--bg-elevated);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-16 md:mb-20">
+        <p class="section-label mb-4">Client Voices</p>
+        <h2 class="section-heading text-3xl md:text-5xl">
+          Trusted by teams who <span class="accent-text">demand</span> the best.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="testimonial-card reveal reveal-delay-1">
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--fg-muted);">
+            "Voltra didn't just redesign our platform — they reimagined how our users think about energy data. Conversion jumped 34% in the first quarter after launch."
+          </p>
+          <div class="flex items-center gap-3">
+            <img src="https://picsum.photos/seed/client1/60/60.jpg" alt="Sarah Chen" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="text-sm font-semibold">Sarah Chen</p>
+              <p class="text-xs" style="color: var(--fg-muted);">CEO, Solaris Energy</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--fg-muted);">
+            "Working with Voltra felt less like hiring an agency and more like gaining a world-class product team. Their attention to micro-interactions is obsessive — in the best way."
+          </p>
+          <div class="flex items-center gap-3">
+            <img src="https://picsum.photos/seed/client2/60/60.jpg" alt="Marcus Webb" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="text-sm font-semibold">Marcus Webb</p>
+              <p class="text-xs" style="color: var(--fg-muted);">CPO, Pulse Health</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-3">
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--fg-muted);">
+            "The 3D portfolio they built for us generates more inbound leads than our entire marketing budget. Architects fly in from other countries just to see it in person."
+          </p>
+          <div class="flex items-center gap-3">
+            <img src="https://picsum.photos/seed/client3/60/60.jpg" alt="Elena Voss" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="text-sm font-semibold">Elena Voss</p>
+              <p class="text-xs" style="color: var(--fg-muted);">Director, Vertex Architects</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / CTA -->
+  <section class="cta-section py-28 md:py-36 relative" id="contact">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <div class="max-w-3xl mx-auto px-6 relative z-10">
+      <div class="reveal text-center">
+        <p class="section-label mb-4">Start a Project</p>
+        <h2 class="section-heading text-3xl md:text-5xl lg:text-6xl mb-6">
+          Ready to build something <span class="accent-hot-text">remarkable</span>?
+        </h2>
+        <p class="text-base md:text-lg mb-10 max-w-lg mx-auto" style="color: var(--fg-muted);">
+          Tell us about your vision. We'll respond within 24 hours with an initial perspective on how we can help.
+        </p>
+      </div>
+
+      <form class="reveal reveal-delay-1 space-y-5" id="contactForm" novalidate>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="name" class="block text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--fg-muted);">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Your name"
+              class="w-full px-5 py-3.5 rounded-xl text-sm font-medium outline-none transition-all focus:ring-2"
+              style="background: var(--card); border: 1px solid var(--border); color: var(--fg); --tw-ring-color: var(--accent);"
+              onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label for="email" class="block text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--fg-muted);">Email</label>
+            <input type="email" id="email" name="email" required placeholder="hello@company.com"
+              class="w-full px-5 py-3.5 rounded-xl text-sm font-medium outline-none transition-all focus:ring-2"
+              style="background: var(--card); border: 1px solid var(--border); color: var(--fg); --tw-ring-color: var(--accent);"
+              onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+        </div>
+        <div>
+          <label for="budget" class="block text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--fg-muted);">Budget Range</label>
+          <select id="budget" name="budget"
+            class="w-full px-5 py-3.5 rounded-xl text-sm font-medium outline-none transition-all cursor-pointer"
+            style="background: var(--card); border: 1px solid var(--border); color: var(--fg);"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="" disabled selected>Select a range</option>
+            <option value="10-25k">$10,000 – $25,000</option>
+            <option value="25-50k">$25,000 – $50,000</option>
+            <option value="50-100k">$50,000 – $100,000</option>
+            <option value="100k+">$100,000+</option>
+          </select>
+        </div>
+        <div>
+          <label for="message" class="block text-xs font-semibold tracking-wider uppercase mb-2" style="color: var(--fg-muted);">Tell us about your project</label>
+          <textarea id="message" name="message" rows="5" required placeholder="What are you building? Who is it for? What's the timeline?"
+            class="w-full px-5 py-3.5 rounded-xl text-sm font-medium outline-none transition-all resize-none focus:ring-2"
+            style="background: var(--card); border: 1px solid var(--border); color: var(--fg); --tw-ring-color: var(--accent);"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+        </div>
+        <div class="text-center pt-2">
+          <button type="submit" class="btn-primary text-base" style="padding: 16px 48px;">Send Inquiry</button>
+        </div>
+        <p id="formError" class="text-center text-sm" style="color: var(--accent-hot); display: none;"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-16 border-t" style="border-color: var(--border); background: var(--bg);">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+        <div>
+          <a href="#hero" class="font-display font-800 text-xl tracking-tight inline-block mb-4" style="color: var(--fg);">
+            VOLTRA<span class="accent-text">.</span>
+          </a>
+          <p class="text-sm leading-relaxed" style="color: var(--fg-muted);">
+            A creative studio crafting digital experiences that ignite. Based in San Francisco, working globally.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-4 tracking-wide uppercase" style="color: var(--fg-muted);">Navigation</h4>
+          <ul class="space-y-3">
+            <li><a href="#services" class="text-sm transition-colors hover:text-[var(--accent)]" style="color: var(--fg-muted);">Services</a></li>
+            <li><a href="#work" class="text-sm transition-colors hover:text-[var(--accent)]" style="color: var(--fg-muted);">Work</a></li>
+            <li><a href="#about" class="text-sm transition-colors hover:text-[var(--accent)]" style="color: var(--fg-muted);">About</a></li>
+            <li><a href="#contact" class="text-sm transition-colors hover:text-[var(--accent)]" style="color: var(--fg-muted);">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-4 tracking-wide uppercase" style="color: var(--fg-muted);">Services</h4>
+          <ul class="space-y-3">
+            <li><span class="text-sm" style="color: var(--fg-muted);">Brand Identity</span></li>
+            <li><span class="text-sm" style="color: var(--fg-muted);">UI/UX Design</span></li>
+            <li><span class="text-sm" style="color: var(--fg-muted);">Web Development</span></li>
+            <li><span class="text-sm" style="color: var(--fg-muted);">Motion & 3D</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-4 tracking-wide uppercase" style="color: var(--fg-muted);">Connect</h4>
+          <div class="flex gap-4 mb-4">
+            <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:bg-[rgba(232,168,73,0.1)]" style="border: 1px solid var(--border); color: var(--fg-muted);">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" aria-label="Dribbble" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:bg-[rgba(232,168,73,0.1)]" style="border: 1px solid var(--border); color: var(--fg-muted);">
+              <i class="fa-brands fa-dribbble text-sm"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:bg-[rgba(232,168,73,0.1)]" style="border: 1px solid var(--border); color: var(--fg-muted);">
+              <i class="fa-brands fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="#" aria-label="GitHub" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:bg-[rgba(232,168,73,0.1)]" style="border: 1px solid var(--border); color: var(--fg-muted);">
+              <i class="fa-brands fa-github text-sm"></i>
+            </a>
+          </div>
+          <p class="text-sm" style="color: var(--fg-muted);">hello@voltra.studio</p>
+        </div>
+      </div>
+      <div class="pt-8 border-t flex flex-col sm:flex-row items-center justify-between gap-4" style="border-color: var(--border);">
+        <p class="text-xs" style="color: var(--fg-muted);">2024 Voltra Studio. All rights reserved.</p>
+        <p class="text-xs" style="color: var(--fg-muted);">Designed & built with obsessive attention to detail.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // --- Particle System ---
+    (function() {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let mouse = { x: -1000, y: -1000 };
+      let animId;
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Create particles
+      const PARTICLE_COUNT = Math.min(60, Math.floor(window.innerWidth / 25));
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: Math.random() * 1.5 + 0.5,
+          alpha: Math.random() * 0.5 + 0.1,
+        });
+      }
+
+      document.addEventListener('mousemove', function(e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Wrap around edges
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.y > canvas.height) p.y = 0;
+
+          // Draw particle
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, Math.max(0.1, p.radius), 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(232, 168, 73, ' + p.alpha + ')';
+          ctx.fill();
+
+          // Draw connections to nearby particles
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              const lineAlpha = (1 - dist / 120) * 0.12;
+              ctx.strokeStyle = 'rgba(232, 168, 73, ' + lineAlpha + ')';
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+
+          // Mouse interaction
+          const mdx = p.x - mouse.x;
+          const mdy = p.y - mouse.y;
+          const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mDist < 150) {
+            const force = (1 - mDist / 150) * 0.02;
+            p.vx += mdx * force;
+            p.vy += mdy * force;
+          }
+
+          // Dampen velocity
+          p.vx *= 0.99;
+          p.vy *= 0.99;
+        }
+
+        animId = requestAnimationFrame(drawParticles);
+      }
+
+      // Respect reduced motion
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        drawParticles();
+      }
+    })();
+
+    // --- Cursor Follower ---
+    (function() {
+      const cursor = document.getElementById('cursorFollower');
+      let cx = 0, cy = 0, tx = 0, ty = 0;
+
+      document.addEventListener('mousemove', function(e) {
+        tx = e.clientX;
+        ty = e.clientY;
+        cursor.classList.add('active');
+      });
+
+      document.addEventListener('mouseleave', function() {
+        cursor.classList.remove('active');
+      });
+
+      // Hover effect on interactive elements
+      document.querySelectorAll('a, button, [data-hoverable], input, textarea, select').forEach(function(el) {
+        el.addEventListener('mouseenter', function() { cursor.classList.add('hovering'); });
+        el.addEventListener('mouseleave', function() { cursor.classList.remove('hovering'); });
+      });
+
+      function animateCursor() {
+        cx += (tx - cx) * 0.15;
+        cy += (ty - cy) * 0.15;
+        cursor.style.left = cx + 'px';
+        cursor.style.top = cy + 'px';
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+    })();
+
+    // --- Hero Orb Mouse Tracking ---
+    (function() {
+      const orb1 = document.getElementById('orb1');
+      document.addEventListener('mousemove', function(e) {
+        const x = (e.clientX / window.innerWidth - 0.5) * 40;
+        const y = (e.clientY / window.innerHeight - 0.5) * 40;
+        orb1.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+      });
+    })();
+
+    // --- Scroll Reveal (IntersectionObserver) ---
+    (function() {
+      var reveals = document.querySelectorAll('.reveal');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      reveals.forEach(function(el) { observer.observe(el); });
+    })();
+
+    // --- Stat Counter Animation ---
+    (function() {
+      var statNumbers = document.querySelectorAll('.stat-number[data-count]');
+      var animated = new Set();
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !animated.has(entry.target)) {
+            animated.add(entry.target);
+            var target = parseInt(entry.target.getAttribute('data-count'));
+            var duration = 2000;
+            var start = performance.now();
+
+            function update(now) {
+              var elapsed = now - start;
+              var progress = Math.min(elapsed / duration, 1);
+              // Ease out cubic
+              var eased = 1 - Math.pow(1 - progress, 3);
+              entry.target.textContent = Math.floor(eased * target) + '+';
+              if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      statNumbers.forEach(function(el) { observer.observe(el); });
+    })();
+
+    // --- Navigation scroll state ---
+    (function() {
+      var nav = document.querySelector('.nav-glass');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 60) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+    })();
+
+    // --- Mobile Menu ---
+    (function() {
+      var toggle = document.getElementById('menuToggle');
+      var menu = document.getElementById('mobileMenu');
+      var close = document.getElementById('menuClose');
+      var links = menu.querySelectorAll('.mobile-nav-link');
+
+      toggle.addEventListener('click', function() { menu.classList.add('open'); });
+      close.addEventListener('click', function() { menu.classList.remove('open'); });
+      links.forEach(function(link) {
+        link.addEventListener('click', function() { menu.classList.remove('open'); });
+      });
+    })();
+
+    // --- Smooth scroll helper ---
+    function scrollToSection(selector) {
+      var el = document.querySelector(selector);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // --- Toast ---
+    function showToast(message) {
+      var toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 3500);
+    }
+
+    // --- Contact Form ---
+    (function() {
+      var form = document.getElementById('contactForm');
+      var errorEl = document.getElementById('formError');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        errorEl.style.display = 'none';
+
+        var name = form.name.value.trim();
+        var email = form.email.value.trim();
+        var message = form.message.value.trim();
+
+        if (!name || !email || !message) {
+          errorEl.textContent = 'Please fill in all required fields.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        // Simple email validation
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorEl.textContent = 'Please enter a valid email address.';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        // Simulate submission
+        var btn = form.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+
+        setTimeout(function() {
+          btn.textContent = 'Send Inquiry';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          form.reset();
+          showToast('Thank you, ' + name + '! We\'ll be in touch within 24 hours.');
+        }, 1500);
+      });
+    })();
+
+    // --- Dynamic time-based greeting in console ---
+    console.log('%c VOLTRA Studio ', 'background: #e8a849; color: #0a0a0a; font-size: 16px; font-weight: bold; padding: 8px 16px; border-radius: 4px;');
+    console.log('%cCrafting digital experiences that ignite.', 'color: #8a8578; font-size: 12px;');
+  </script>
+</body>
+</html>
